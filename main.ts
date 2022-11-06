@@ -1,3 +1,8 @@
+/**
+ * RobotBit test 
+ * 
+ * Uses Frank MBitt car 2 extensions etc + My code
+ */
 // Simple test of using MBIT APP to control RobotBit...
 // 
 // Uses Motors connected to M1A  + M2B
@@ -78,6 +83,10 @@ function sendDistanceAndSpeed () {
         bluetooth.uartWriteString("$CSB" + "" + "," + speed + "#")
     }
 }
+bluetooth.onBluetoothDisconnected(function () {
+    basic.showIcon(IconNames.Sad)
+    connected = false
+})
 bluetooth.onBluetoothConnected(function () {
     basic.showIcon(IconNames.Happy)
     sendDistanceAndSpeed()
@@ -88,10 +97,6 @@ bluetooth.onBluetoothConnected(function () {
         carctrl()
         DoSpeed()
     }
-})
-bluetooth.onBluetoothDisconnected(function () {
-    basic.showIcon(IconNames.Sad)
-    connected = false
 })
 function DoSpeed () {
     if (uartdata == "1") {
@@ -125,7 +130,7 @@ let speed = 0
 let connected = false
 bluetooth.setTransmitPower(7)
 bluetooth.startUartService()
-basic.showIcon(IconNames.StickFigure)
+basic.showIcon(IconNames.Ghost)
 connected = false
 speed = 100
 basic.forever(function () {
